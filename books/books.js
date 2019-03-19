@@ -8,7 +8,8 @@ const mongoose = require('mongoose');
 const MLAB_KEY = process.env.MLAB_KEY;
 
 
-mongoose.connect("mongodb+srv://aaroncross:" + MLAB_KEY + "@testcluster-zbqkz.mongodb.net/test?retryWrites=true", () => {
+mongoose.connect("mongodb+srv://aaroncross:" + MLAB_KEY +
+    "@testcluster-zbqkz.mongodb.net/test?retryWrites=true", () => {
     console.log('database connected!')
     console.log('**************');
 
@@ -17,6 +18,10 @@ mongoose.connect("mongodb+srv://aaroncross:" + MLAB_KEY + "@testcluster-zbqkz.mo
 app.get('/', (req, res) => {
     console.log(res);
     res.send('This is the "/GET" endpoint');
+});
+
+app.post('/book', (req, res) => {
+
 });
 
 app.listen(PORT, () => {
