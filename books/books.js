@@ -4,9 +4,11 @@ const express = require('express');
 const app = express();
 const PORT = 1234;
 
+const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const MLAB_KEY = process.env.MLAB_KEY;
 
+app.use(bodyParser.json());
 
 mongoose.connect("mongodb+srv://aaroncross:" + MLAB_KEY +
     "@testcluster-zbqkz.mongodb.net/test?retryWrites=true", () => {
@@ -20,6 +22,7 @@ app.get('/', (req, res) => {
 });
 
 app.post('/book', (req, res) => {
+    console.log(req.body);
     res.send('Testing Book route')
 });
 
