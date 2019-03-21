@@ -16,12 +16,11 @@ mongoose.connect("mongodb+srv://aaroncross:" + MLAB_KEY +
 });
 
 app.get('/', (req, res) => {
-    console.log(res);
     res.send('This is the "/GET" endpoint');
 });
 
 app.post('/book', (req, res) => {
-
+    res.send('Testing Book route')
 });
 
 app.listen(PORT, () => {
