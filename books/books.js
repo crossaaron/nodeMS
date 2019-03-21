@@ -5,7 +5,12 @@ const app = express();
 const PORT = 1234;
 
 const bodyParser = require('body-parser');
+
 const mongoose = require('mongoose');
+
+require('./Book');
+const Book = mongoose.model('Book');
+
 const MLAB_KEY = process.env.MLAB_KEY;
 
 app.use(bodyParser.json());
@@ -22,8 +27,26 @@ app.get('/', (req, res) => {
 });
 
 app.post('/book', (req, res) => {
+    console.log("Book Created:");
     console.log(req.body);
-    res.send('Testing Book route')
+
+    let newBook = {
+        title: req.body.title,
+        author: req.body.author,
+        numberOfPages: req.body.numberOfPages,
+        publisher: req.body.publisher
+    };
+
+    let book = new Book(newBook);
+
+    book.save().then(()=> {
+        console.log('book added to database')
+    }).catch((err) => {
+        if (err) {
+            throw err;
+        }
+    });
+    res.send('book added to database')
 });
 
 app.listen(PORT, () => {
