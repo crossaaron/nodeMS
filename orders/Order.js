@@ -11,10 +11,10 @@ mongoose.model('Order', {
     },
     initialDate: {
         type: Date,
-        required: true
+        required: false
     },
     deliveryDate: {
         type: Date,
-        required: true
+        required: false
     }
 });
