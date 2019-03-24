@@ -49,6 +49,31 @@ app.post('/book', (req, res) => {
     res.send('book added to database')
 });
 
+app.get('/books', (req, res) => {
+
+    Book.find().then((books) => {
+        res.json(books);
+    }).catch(err => {
+        if (err) {
+            throw err;
+        }
+    })
+});
+
+app.get('/book/:id', (req, res) => {
+    Book.findById(req.params.id).then((book) => {
+        if (book) {
+            res.json(book)
+        } else {
+            res.sendStatus(404)
+        }
+    }).catch(err => {
+        if (err) {
+            throw err;
+        }
+    })
+});
+
 app.listen(PORT, () => {
     console.log('**************');
     console.log('connected on PORT: ' + PORT + ' BOOK SERVICE');
