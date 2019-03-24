@@ -3,15 +3,11 @@ require('dotenv').config();
 const express = require('express');
 const app = express();
 const PORT = 1234;
-
 const bodyParser = require('body-parser');
-
 const mongoose = require('mongoose');
-
-require('./Book');
-const Book = mongoose.model('Book');
-
 const MLAB_KEY = process.env.MLAB_KEY;
+
+
 
 app.use(bodyParser.json());
 
@@ -25,6 +21,9 @@ mongoose.connect("mongodb+srv://aaroncross:" + MLAB_KEY +
 app.get('/', (req, res) => {
     res.send('This is the "/GET" endpoint');
 });
+
+require('./Book');
+const Book = mongoose.model('Book');
 
 app.post('/book', (req, res) => {
     console.log("Book Created:");
