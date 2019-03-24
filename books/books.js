@@ -65,7 +65,7 @@ app.get('/book/:id', (req, res) => {
         if (book) {
             res.json(book)
         } else {
-            res.sendStatus(404)
+            res.sendStatus(404);
         }
     }).catch(err => {
         if (err) {
