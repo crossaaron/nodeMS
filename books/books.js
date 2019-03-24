@@ -74,6 +74,16 @@ app.get('/book/:id', (req, res) => {
     })
 });
 
+app.delete('/book/:id', (req, res) => {
+    Book.findOneAndRemove(req.params.id).then(() => {
+        res.send('Book Removed!')
+    }).catch(err => {
+        if (err) {
+            throw err;
+        }
+    })
+});
+
 app.listen(PORT, () => {
     console.log('**************');
     console.log('connected on PORT: ' + PORT + ' BOOK SERVICE');
