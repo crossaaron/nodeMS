@@ -6,6 +6,7 @@ const PORT = 1234;
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const MLAB_KEY = process.env.MLAB_KEY;
+const axios = require('axios');
 
 
 app.use(bodyParser.json());
@@ -49,9 +50,21 @@ app.get('/orders', (req, res) => {
         if (err) {
             throw err;
         }
-
     })
-})
+});
+
+app.get('/order/:id', (req, res) => {
+    Order.findById(req.params.id).then((order) => {
+        if (order) {
+            axios.get('http://localhost:1234/customer/' + order.CustomerID).then((response) => {
+                console.log(response);
+            });
+            res.send('Quick Response');
+        }else {
+            res.send('Invalid Order')
+        }
+    })
+});
 
 app.listen(PORT, () => {
     console.log('Order Service Connected!')
