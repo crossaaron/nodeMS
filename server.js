@@ -21,8 +21,8 @@ const Order = mongoose.model('Order');
 app.use(bodyParser.json());
 
 mongoose.connect("mongodb+srv://aaroncross:" + MLAB_KEY +
-    "@testcluster-zbqkz.mongodb.net/test?retryWrites=true", () => {
-    console.log('database connected!')
+    "@testcluster-zbqkz.mongodb.net/test?retryWrites=true", {useNewUrlParser:true}, () => {
+    console.log('database connected!');
     console.log('**************');
 
 });
@@ -181,9 +181,15 @@ app.get('/order/:id', (req, res) => {
     Order.findById(req.params.id).then((order) => {
         if (order) {
             axios.get('http://localhost:1234/customer/' + order.CustomerID).then((response) => {
-                let orderObject = {customerName: response.data.name, bookTitle: ''}
-                console.log(orderObject);
-
+                let orderObject = {
+                    orderID: req.params.id,
+                    customerName: response.data.name,
+                    bookTitle: ''
+                };
+                axios.get('http://localhost:1234/book/' + order.BookID).then((response) => {
+                    orderObject.bookTitle = response.data.title;
+                    res.json(orderObject);
+                })
             })
         } else {
             res.send('Invalid Order')
